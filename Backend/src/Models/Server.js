@@ -1,12 +1,18 @@
 import express from "express";
 import Config from "../Config/index.js";
+import ConectDB from "../Database/connection.js";
 import Global from "../Middlewares/Global.js";
 
 export default class {
   constructor() {
     this.app = express();
     this.port = Config.PORT;
+    this.MongoDB();
     this.middlewares = Global(this.app);
+  }
+
+  async MongoDB() {
+    await ConectDB(Config.MONGO_URL);
   }
 
   startServer() {
