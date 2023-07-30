@@ -1,7 +1,7 @@
 import express from "express";
-import Config from "../Config/index.js";
-import ConectDB from "../Database/connection.js";
-import Global from "../Middlewares/Global.js";
+import Config from "./Config/index.js";
+import ConectDB from "./Database/connection.js";
+import Global from "./Middlewares/Global.js";
 
 export default class {
   constructor() {
