@@ -10,7 +10,7 @@ const getAllPresupuestos = async (req, res) => {
     if (allPresupuestos.length > 0) {
       sendSuccessResponse(res, allPresupuestos, "Presupuestos encontrados");
     } else {
-      sendSuccessResponse(res, allPresupuestos, "No hay Presupuestos", 204);
+      sendErrorResponse(res, "No hay Presupuestos", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);
@@ -25,7 +25,7 @@ const getOnePresupuesto = async (req, res) => {
     if (OnePresupuesto) {
       sendSuccessResponse(res, OnePresupuesto, "Presupuesto encontrada");
     } else {
-      sendSuccessResponse(res, null, "No Existe ese Presupuesto", 404);
+      sendErrorResponse(res, "No Existe ese Presupuesto", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);
@@ -52,7 +52,7 @@ const updateOnePresupuesto = async (req, res) => {
     if (updatedPresupuesto) {
       sendSuccessResponse(res, updatedPresupuesto, "Presupuesto Actualizado");
     } else {
-      sendSuccessResponse(res, null, "Presupuesto no encontrado", 404);
+      sendErrorResponse(res, "Presupuesto no encontrado", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);
@@ -67,7 +67,7 @@ const deleteOnePresupuesto = async (req, res) => {
     if (deletedPresupuesto) {
       sendSuccessResponse(res, deletedPresupuesto, "Presupuesto Eliminado");
     } else {
-      sendSuccessResponse(res, null, "Presupuesto no encontrado", 404);
+      sendErrorResponse(res, "Presupuesto no encontrado", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);

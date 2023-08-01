@@ -10,7 +10,7 @@ const getAllTransacciones = async (req, res) => {
     if (allTransacciones.length > 0) {
       sendSuccessResponse(res, allTransacciones, "Transacciones encontradas");
     } else {
-      sendSuccessResponse(res, allTransacciones, "No hay Transacciones", 204);
+      sendErrorResponse(res, "No hay Transacciones", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);
@@ -25,7 +25,7 @@ const getOneTransaccion = async (req, res) => {
     if (OneTransaccion) {
       sendSuccessResponse(res, OneTransaccion, "Transaccion encontrada");
     } else {
-      sendSuccessResponse(res, null, "No Existe esa Transaccion", 404);
+      sendErrorResponse(res, "No Existe esa Transaccion", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);
@@ -52,7 +52,7 @@ const updateOneTransaccion = async (req, res) => {
     if (updatedTransaccion) {
       sendSuccessResponse(res, updatedTransaccion, "Transaccion Actualizada");
     } else {
-      sendSuccessResponse(res, null, "Transaccion no encontrada", 404);
+      sendErrorResponse(res, "Transaccion no encontrada", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);
@@ -67,7 +67,7 @@ const deleteOneTransaccion = async (req, res) => {
     if (deletedTransaccion) {
       sendSuccessResponse(res, deletedTransaccion, "Transanccion Eliminada");
     } else {
-      sendSuccessResponse(res, null, "Transanccion no encontrada", 404);
+      sendErrorResponse(res, "Transanccion no encontrada", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);

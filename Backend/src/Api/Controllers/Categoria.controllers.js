@@ -10,7 +10,7 @@ const getAllCategorias = async (req, res) => {
     if (allCategorias.length > 0) {
       sendSuccessResponse(res, allCategorias, "Categorias encontradas");
     } else {
-      sendSuccessResponse(res, allCategorias, "No hay Categorias", 204);
+      sendErrorResponse(res, "No hay Categorias", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);
@@ -25,7 +25,7 @@ const getOneCategoria = async (req, res) => {
     if (Onecategoria) {
       sendSuccessResponse(res, Onecategoria, "Categoria encontrada");
     } else {
-      sendSuccessResponse(res, null, "No Existe esa Categoria", 404);
+      sendErrorResponse(res, "No Existe esa Categoria", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);
@@ -50,9 +50,9 @@ const updateOneCategoria = async (req, res) => {
       req.body
     );
     if (updatedCategoria) {
-      sendSuccessResponse(res, updatedCategoria, "Categoria Actualizada");
+      sendSuccessResponse(res, "Categoria Actualizada");
     } else {
-      sendSuccessResponse(res, null, "Categoria no encontrada", 404);
+      sendErrorResponse(res, "Categoria no encontrada", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);
@@ -65,9 +65,9 @@ const deleteOneCategoria = async (req, res) => {
       req.params.categoriaId
     );
     if (deletedCategoria) {
-      sendSuccessResponse(res, deletedCategoria, "Categoria Eliminada");
+      sendSuccessResponse(res, "Categoria Eliminada");
     } else {
-      sendSuccessResponse(res, null, "Categoria no encontrada", 404);
+      sendErrorResponse(res, "Categoria no encontrada", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);

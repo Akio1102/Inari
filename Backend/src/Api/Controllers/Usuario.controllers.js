@@ -10,7 +10,7 @@ const getAllUsuarios = async (req, res) => {
     if (allUsuarios.length > 0) {
       sendSuccessResponse(res, allUsuarios, "Usuarios encontrados");
     } else {
-      sendSuccessResponse(res, allUsuarios, "No hay Usuarios", 204);
+      sendErrorResponse(res, "No hay Usuarios", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);
@@ -25,7 +25,7 @@ const getOneUsuario = async (req, res) => {
     if (OneUsuario) {
       sendSuccessResponse(res, OneUsuario, "Usuario encontrado");
     } else {
-      sendSuccessResponse(res, null, "No Existe ese Usuario", 404);
+      sendErrorResponse(res, "No Existe ese Usuario", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);
@@ -50,7 +50,7 @@ const updateOneUsuario = async (req, res) => {
     if (updatedUsuario) {
       sendSuccessResponse(res, updatedUsuario, "Usuario Actualizado");
     } else {
-      sendSuccessResponse(res, null, "Usuario no encontrado", 404);
+      sendErrorResponse(res, "Usuario no encontrado", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);
@@ -65,7 +65,7 @@ const deleteOneUsuario = async (req, res) => {
     if (deletedUsuario) {
       sendSuccessResponse(res, deletedUsuario, "Usuario Eliminado");
     } else {
-      sendSuccessResponse(res, null, "Usuario no encontrado", 404);
+      sendErrorResponse(res, "Usuario no encontrado", 404);
     }
   } catch (error) {
     sendErrorResponse(res, error);
