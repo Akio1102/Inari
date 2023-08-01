@@ -1,14 +1,18 @@
 import { Schema, model } from "mongoose";
 
-const CategoriaSchema = Schema(
+const PresupuestoSchema = Schema(
   {
-    nombre: {
+    categoria_id: {
       type: String,
-      required: [true, `Nombres is required`],
+      required: [true, `CategoriaID is required`],
     },
-    descripcion: {
+    monto: {
+      type: Number,
+      required: [true, `Monto is required`],
+    },
+    usuario_id: {
       type: String,
-      required: [true, `Descripcion is required`],
+      required: [true, `UsuarioID is required`],
     },
   },
   {
@@ -16,4 +20,4 @@ const CategoriaSchema = Schema(
   }
 );
 
-export default model("categoria", CategoriaSchema);
+export default model("presupuesto", PresupuestoSchema);
