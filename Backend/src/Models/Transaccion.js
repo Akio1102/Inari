@@ -22,10 +22,6 @@ const TransaccionSchema = Schema(
       type: Number,
       required: [true, `Monto is required`],
     },
-    fecha: {
-      type: Date,
-      required: [true, `Fecha is required`],
-    },
   },
   {
     timestamps: true,
