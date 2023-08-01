@@ -1,4 +1,4 @@
-import Categorias from "../../Models/Categoria.js";
+import Categorias from "./Category.Schema.js";
 
 const getAllCategorias = async () => {
   return await Categorias.find();

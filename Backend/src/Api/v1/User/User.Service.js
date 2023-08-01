@@ -1,4 +1,4 @@
-import Usuarios from "../../Models/Usuario.js";
+import Usuarios from "./User.Schema.js";
 
 const getAllUsuarios = async () => {
   return await Usuarios.find();

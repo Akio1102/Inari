@@ -1,4 +1,4 @@
-import Presupuestos from "../../Models/Presupuesto.js";
+import Presupuestos from "./Budget.Schema.js";
 
 const getAllPresupuestos = async () => {
   return await Presupuestos.find();

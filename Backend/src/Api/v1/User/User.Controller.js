@@ -1,4 +1,4 @@
-import usuariosService from "../Services/UsuarioService.js";
+import usuariosService from "./User.Service.js";
 import {
   sendSuccessResponse,
   sendErrorResponse,

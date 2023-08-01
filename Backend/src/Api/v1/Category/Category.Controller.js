@@ -1,4 +1,4 @@
-import categoriasService from "../Services/CategoriaService.js";
+import categoriasService from "./Category.Service.js";
 import {
   sendSuccessResponse,
   sendErrorResponse,

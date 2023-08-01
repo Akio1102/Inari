@@ -1,4 +1,4 @@
-import Transacciones from "../../Models/Transaccion.js";
+import Transacciones from "./Transaction.Schema.js";
 
 const getAllTransacciones = async () => {
   return await Transacciones.find();

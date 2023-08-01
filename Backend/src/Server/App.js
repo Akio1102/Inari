@@ -1,7 +1,7 @@
 import express from "express";
 import { Config, Global } from "./Config/config.js";
 import ConectDB from "./Database/connection.js";
-import Routers from "./Api/Routes/Index.routes.js";
+import Routers from "../Api/v1/Routes.js";
 
 export default class {
   constructor() {

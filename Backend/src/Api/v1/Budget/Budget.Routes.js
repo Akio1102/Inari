@@ -1,5 +1,5 @@
 import { Router } from "express";
-import PresupuestoController from "../Controllers/Presupuesto.controllers.js";
+import PresupuestoController from "./Budget.Controller.js";
 
 const ROUTER = Router();
 
