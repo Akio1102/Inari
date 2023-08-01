@@ -1,7 +1,7 @@
 import express from "express";
-import Config from "./Config/index.js";
+import { Config, Global } from "./Config/config.js";
 import ConectDB from "./Database/connection.js";
-import Global from "./Middlewares/Global.js";
+import Routers from "./Api/Routes/Index.routes.js";
 
 export default class {
   constructor() {
@@ -9,15 +9,21 @@ export default class {
     this.port = Config.PORT;
     this.MongoDB();
     this.middlewares = Global(this.app);
+    this.routes();
   }
 
   async MongoDB() {
     await ConectDB(Config.MONGO_URL);
   }
 
+  routes() {
+    this.app.use(Routers);
+  }
+
   startServer() {
     this.app
       .listen(this.port, () => {
+        console.clear();
         console.log(`Server running on PORT ${this.port}`);
       })
       .on("error", (err) => {
