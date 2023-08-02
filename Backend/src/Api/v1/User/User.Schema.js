@@ -11,13 +11,14 @@ const UsuarioSchema = Schema(
       required: [true, `Correo is required`],
       unique: true,
     },
-    contrasena: {
+    password: {
       type: String,
       required: [true, `Password is required`],
     },
     estado_cuenta: {
-      type: String,
-      required: [true, `Estado_Cuenta is required`],
+      type: Boolean,
+      default: true,
+      // required: [true, `Estado_Cuenta is required`],
     },
   },
   {

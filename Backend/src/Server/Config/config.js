@@ -6,6 +6,7 @@ import cors from "cors";
 export const Config = {
   PORT: process.env.PORT,
   MONGO_URL: process.env.MONGO_URL,
+  JWT_PRIVATE_KEY: process.env.JWT_PRIVATE_KEY,
 };
 
 export function Global(app) {
