@@ -4,11 +4,28 @@ import { createToken } from "../../Helpers/Token.js";
 import { checkLogin } from "./check.js";
 
 const getAllUsuarios = async () => {
-  return await Usuarios.find();
+  try {
+    const allUser = await Usuarios.find();
+    if (allUser.length > 0) {
+      return { msg: "Usuarios encontrados", data: allUser };
+    }
+    return { msg: "No hay Usuarios", status: 404 };
+  } catch (error) {
+    throw new Error(`Error el Servidor: ${error.message}`);
+  }
 };
 
 const getOneUsuario = async (usuarioID) => {
-  return await Usuarios.findById(usuarioID);
+  try {
+    const OneUser = await Usuarios.findById(usuarioID);
+
+    if (!OneUser) {
+      return { msg: "No Existe ese Usuario", status: 404 };
+    }
+    return { msg: "Usuario encontrado", data: OneUser };
+  } catch (error) {
+    throw new Error(`Error el Servidor: ${error.message}`);
+  }
 };
 
 const Login = async (user) => {

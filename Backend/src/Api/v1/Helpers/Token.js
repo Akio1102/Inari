@@ -5,12 +5,10 @@ const encoder = new TextEncoder();
 
 export const createToken = async (user) => {
   try {
-    const { _id, nombre, correo } = user;
+    const { _id } = user;
 
     const jwtConstructor = new SignJWT({
       sub: _id.toString(),
-      nombre,
-      correo,
     });
 
     const token = await jwtConstructor

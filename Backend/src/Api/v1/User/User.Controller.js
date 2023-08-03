@@ -2,40 +2,38 @@ import usuariosService from "./Services/User.js";
 import {
   sendSuccessResponse,
   sendErrorResponse,
+  handleUsuariosResponse,
 } from "../Helpers/sendResponse.js";
 
 const getAllUsuarios = async (req, res) => {
   try {
     const allUsuarios = await usuariosService.getAllUsuarios();
-    if (allUsuarios.length > 0) {
-      sendSuccessResponse(res, allUsuarios, "Usuarios encontrados");
-    } else {
-      sendErrorResponse(res, "No hay Usuarios", 404);
-    }
+    handleUsuariosResponse(res, allUsuarios);
   } catch (error) {
-    sendErrorResponse(res, error);
+    sendErrorResponse(res, `Error al Obtener usuario: ${error.message}`);
   }
 };
 
 const getOneUsuario = async (req, res) => {
   try {
-    const OneUsuario = await usuariosService.getOneUsuario(
-      req.params.usuarioId
-    );
-    if (OneUsuario) {
-      sendSuccessResponse(res, OneUsuario, "Usuario encontrado");
-    } else {
-      sendErrorResponse(res, "No Existe ese Usuario", 404);
-    }
+    const { usuarioId } = req.params;
+    const oneUsuario = await usuariosService.getOneUsuario(usuarioId);
+    handleUsuariosResponse(res, oneUsuario);
   } catch (error) {
-    sendErrorResponse(res, error);
+    sendErrorResponse(res, `Error al Obtener usuario: ${error.message}`);
   }
 };
 
 const createNewUsuario = async (req, res) => {
   try {
-    const createdUsuario = await usuariosService.createNewUsuario(req.body);
-    sendSuccessResponse(res, createdUsuario, "Usuario Creado", 201);
+    const { body } = req.body;
+
+    if (!body.username || !body.password) {
+      return sendErrorResponse(res, "Datos Incompletos", 400);
+    }
+
+    const createdUsuario = await usuariosService.createNewUsuario(body);
+    handleUsuariosResponse(res, createdUsuario);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -43,17 +41,17 @@ const createNewUsuario = async (req, res) => {
 
 const updateOneUsuario = async (req, res) => {
   try {
+    const { usuarioId } = req.params;
+
     const updatedUsuario = await usuariosService.updateOneUsuario(
-      req.params.usuarioId,
+      usuarioId,
       req.body
     );
-    if (updatedUsuario) {
-      sendSuccessResponse(res, updatedUsuario, "Usuario Actualizado");
-    } else {
-      sendErrorResponse(res, "Usuario no encontrado", 404);
-    }
+    const hashedPassword = encryptPassword(password);
+    newUsuarioData.password = hashedPassword;
+    handleUsuariosResponse(res, updatedUsuario);
   } catch (error) {
-    sendErrorResponse(res, error);
+    sendErrorResponse(res, `Error al Actualizar usuario: ${error.message}`);
   }
 };
 
