@@ -1,31 +1,40 @@
 import { SignJWT, jwtVerify } from "jose";
+import { Config } from "../../../Server/Config/config.js";
 
-export const createToken = async (req, res, next) => {
-  console.log(req.body);
+const encoder = new TextEncoder();
+
+export const createToken = async (user) => {
   try {
-    const { body } = req;
-    const encoder = new TextEncoder();
-    const jwtconstructor = new SignJWT(body);
-    const token = await new jwtconstructor.setProtectedHeader({
-      alg: "HS256",
-      typ: "JWT",
-    })
+    const { _id, nombre, correo } = user;
+
+    const jwtConstructor = new SignJWT({
+      sub: _id.toString(),
+      nombre,
+      correo,
+    });
+
+    const token = await jwtConstructor
+      .setProtectedHeader({
+        alg: "HS256",
+        typ: "JWT",
+      })
       .setIssuedAt()
       .setExpirationTime("1h")
-      .sign(encoder.encode("qweeqwew"));
-    req.auth = token;
-    next();
+      .sign(encoder.encode(Config.JWT_PRIVATE_KEY));
+
+    return token;
   } catch (error) {
     console.error(error);
     throw new Error("Error al generar el token");
   }
 };
 
-export async function verifyToken(token) {
+export const verifyToken = async (token) => {
   try {
     const { payload } = await jwtVerify(token, Config.JWT_PRIVATE_KEY);
     return payload;
   } catch (error) {
+    console.error("Token inválido:", error.message);
     throw new Error("Token inválido");
   }
-}
+};

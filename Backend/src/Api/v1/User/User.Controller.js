@@ -1,9 +1,8 @@
-import usuariosService from "./User.Service.js";
+import usuariosService from "./Services/User.js";
 import {
   sendSuccessResponse,
   sendErrorResponse,
 } from "../Helpers/sendResponse.js";
-import { createToken } from "../Helpers/Token.js";
 
 const getAllUsuarios = async (req, res) => {
   try {
@@ -36,8 +35,6 @@ const getOneUsuario = async (req, res) => {
 const createNewUsuario = async (req, res) => {
   try {
     const createdUsuario = await usuariosService.createNewUsuario(req.body);
-    // const token = await createToken(req.body);
-    // console.log("Token generado:", token);
     sendSuccessResponse(res, createdUsuario, "Usuario Creado", 201);
   } catch (error) {
     sendErrorResponse(res, error);
@@ -75,10 +72,23 @@ const deleteOneUsuario = async (req, res) => {
   }
 };
 
+const Login = async (req, res) => {
+  try {
+    const userData = req.body;
+    const login = await usuariosService.Login(userData);
+
+    sendSuccessResponse(res, login, "Inicio de sesión exitoso");
+  } catch (error) {
+    console.log(error);
+    sendErrorResponse(res, `Error al iniciar sesión: ${error.message}`);
+  }
+};
+
 export default {
   getAllUsuarios,
   getOneUsuario,
   createNewUsuario,
   updateOneUsuario,
   deleteOneUsuario,
+  Login,
 };

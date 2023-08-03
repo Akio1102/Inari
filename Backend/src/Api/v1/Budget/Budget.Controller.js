@@ -13,7 +13,7 @@ const getAllPresupuestos = async (req, res) => {
       sendErrorResponse(res, "No hay Presupuestos", 404);
     }
   } catch (error) {
-    sendErrorResponse(res, error);
+    sendErrorResponse(res, error.message);
   }
 };
 
