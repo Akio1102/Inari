@@ -51,7 +51,7 @@ export const createNewUsuario = async (userData) => {
       data: newUsuario,
     };
   } catch (error) {
-    throw new Error("Error al crear el nuevo usuario");
+    throw new Error(`Error el Servidor: ${error.message}`);
   }
 };
 
@@ -87,7 +87,7 @@ const updateOneUsuario = async (userID, userData) => {
       data: updateUser,
     };
   } catch (error) {
-    throw new Error("Hubo un problema al actualizar el usuario");
+    throw new Error(`Error el Servidor: ${error.message}`);
   }
 };
 
@@ -107,7 +107,7 @@ const deleteOneUsuario = async (userID) => {
       msg: "Usuario Eliminado Exitosamente",
     };
   } catch (error) {
-    throw new Error("Hubo un problema al actualizar el usuario");
+    throw new Error(`Error el Servidor: ${error.message}`);
   }
 };
 

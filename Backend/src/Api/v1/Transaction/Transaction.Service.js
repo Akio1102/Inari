@@ -4,7 +4,7 @@ const getAllTransacciones = async () => {
   try {
     const allTransacciones = await Transacciones.find();
     if (allTransacciones > 0) {
-      return { msg: "Transancciones Encontradas", data: allUser };
+      return { msg: "Transancciones Encontradas", data: allTransacciones };
     }
     return { msg: "No hay Transancciones", status: 404 };
   } catch (error) {
@@ -66,11 +66,11 @@ const updateOneTransaccion = async (transaccionID, transaccionData) => {
 
     return {
       status: 201,
-      msg: "Transaccopm Actualizado Exitosamente",
+      msg: "Transaccion Actualizado Exitosamente",
       data: updateTransaccion,
     };
   } catch (error) {
-    throw new Error("Hubo un problema al actualizar la Transaccion");
+    throw new Error(`Error el Servidor: ${error.message}`);
   }
 };
 
@@ -92,10 +92,8 @@ const deleteOneTransaccion = async (transaccionID) => {
       msg: "Transaccion Eliminada Exitosamente",
     };
   } catch (error) {
-    throw new Error("Hubo un problema al actualizar el usuario");
+    throw new Error(`Error el Servidor: ${error.message}`);
   }
-
-  return await Transacciones.findByIdAndDelete(transaccionID);
 };
 
 export default {

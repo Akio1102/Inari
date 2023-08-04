@@ -10,7 +10,7 @@ const getAllUsuarios = async (req, res) => {
     const allUsuarios = await usuariosService.getAllUsuarios();
     handleUsuariosResponse(res, allUsuarios);
   } catch (error) {
-    sendErrorResponse(res, `Error al Obtener usuario: ${error.message}`);
+    sendErrorResponse(res, error);
   }
 };
 
@@ -20,7 +20,7 @@ const getOneUsuario = async (req, res) => {
     const oneUsuario = await usuariosService.getOneUsuario(usuarioId);
     handleUsuariosResponse(res, oneUsuario);
   } catch (error) {
-    sendErrorResponse(res, `Error al Obtener usuario: ${error.message}`);
+    sendErrorResponse(res, error);
   }
 };
 

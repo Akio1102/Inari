@@ -1,6 +1,5 @@
 import transaccionesService from "./Transaction.Service.js";
 import {
-  sendSuccessResponse,
   sendErrorResponse,
   handleUsuariosResponse,
 } from "../Helpers/sendResponse.js";
@@ -10,7 +9,7 @@ const getAllTransacciones = async (req, res) => {
     const allTransancciones = await transaccionesService.getAllTransacciones();
     handleUsuariosResponse(res, allTransancciones);
   } catch (error) {
-    sendErrorResponse(res, `Error al Obtener usuario: ${error.message}`);
+    sendErrorResponse(res,error);
   }
 };
 
@@ -22,7 +21,7 @@ const getOneTransaccion = async (req, res) => {
     );
     handleUsuariosResponse(res, OneTransaccion);
   } catch (error) {
-    sendErrorResponse(res, `Error al Obtener usuario: ${error.message}`);
+    sendErrorResponse(res, error);
   }
 };
 
@@ -31,7 +30,7 @@ const createNewTransaccion = async (req, res) => {
     const createdTransaccion = await transaccionesService.createNewTransaccion(
       req.body
     );
-    sendSuccessResponse(res, createdTransaccion);
+    handleUsuariosResponse(res, createdTransaccion);
   } catch (error) {
     sendErrorResponse(res, error);
   }

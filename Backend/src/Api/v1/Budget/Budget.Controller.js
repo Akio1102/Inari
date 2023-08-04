@@ -1,32 +1,25 @@
 import presupuestosService from "./Budget.Service.js";
 import {
-  sendSuccessResponse,
   sendErrorResponse,
+  handleUsuariosResponse,
 } from "../Helpers/sendResponse.js";
 
 const getAllPresupuestos = async (req, res) => {
   try {
     const allPresupuestos = await presupuestosService.getAllPresupuestos();
-    if (allPresupuestos.length > 0) {
-      sendSuccessResponse(res, allPresupuestos, "Presupuestos encontrados");
-    } else {
-      sendErrorResponse(res, "No hay Presupuestos", 404);
-    }
+    handleUsuariosResponse(res, allPresupuestos);
   } catch (error) {
-    sendErrorResponse(res, error.message);
+    sendErrorResponse(res, error);
   }
 };
 
 const getOnePresupuesto = async (req, res) => {
   try {
+    const { presupuestoId } = req.params;
     const OnePresupuesto = await presupuestosService.getOnePresupuesto(
-      req.params.presupuestoId
+      presupuestoId
     );
-    if (OnePresupuesto) {
-      sendSuccessResponse(res, OnePresupuesto, "Presupuesto encontrada");
-    } else {
-      sendErrorResponse(res, "No Existe ese Presupuesto", 404);
-    }
+    handleUsuariosResponse(res, OnePresupuesto);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -37,7 +30,7 @@ const createNewPresupuesto = async (req, res) => {
     const createdPresupuesto = await presupuestosService.createNewPresupuesto(
       req.body
     );
-    sendSuccessResponse(res, createdPresupuesto, "Presupuesto Creado", 201);
+    handleUsuariosResponse(res, createdPresupuesto);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -45,15 +38,9 @@ const createNewPresupuesto = async (req, res) => {
 
 const updateOnePresupuesto = async (req, res) => {
   try {
-    const updatedPresupuesto = await presupuestosService.updateOnePresupuesto(
-      req.params.presupuestoId,
-      req.body
-    );
-    if (updatedPresupuesto) {
-      sendSuccessResponse(res, updatedPresupuesto, "Presupuesto Actualizado");
-    } else {
-      sendErrorResponse(res, "Presupuesto no encontrado", 404);
-    }
+    const { presupuestoId } = req.params;
+    const updatedPresupuesto = await presupuestosService.updateOnePresupuesto(  presupuestoId,req.body);
+    handleUsuariosResponse(res, updatedPresupuesto);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -61,14 +48,9 @@ const updateOnePresupuesto = async (req, res) => {
 
 const deleteOnePresupuesto = async (req, res) => {
   try {
-    const deletedPresupuesto = await presupuestosService.deleteOnePresupuesto(
-      req.params.presupuestoId
-    );
-    if (deletedPresupuesto) {
-      sendSuccessResponse(res, deletedPresupuesto, "Presupuesto Eliminado");
-    } else {
-      sendErrorResponse(res, "Presupuesto no encontrado", 404);
-    }
+    const { presupuestoId } = req.params;
+    const deletedPresupuesto = await presupuestosService.deleteOnePresupuesto(presupuestoId);
+    handleUsuariosResponse(res, deletedPresupuesto);
   } catch (error) {
     sendErrorResponse(res, error);
   }
