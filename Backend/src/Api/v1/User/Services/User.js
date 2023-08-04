@@ -1,6 +1,5 @@
 import Usuarios from "../User.Schema.js";
 import { encryptPassword } from "../../Helpers/Hash.js";
-import { createToken } from "../../Helpers/Token.js";
 import { checkLogin } from "./check.js";
 
 const getAllUsuarios = async () => {
@@ -114,8 +113,7 @@ const deleteOneUsuario = async (userID) => {
 const Login = async (user) => {
   try {
     const authenticatedUser = await checkLogin(user);
-    const token = await createToken(authenticatedUser);
-    return "Token Generado:", token;
+    return authenticatedUser;
   } catch (error) {
     throw new Error(`Error al iniciar sesión: ${error.message}`);
   }
@@ -124,8 +122,8 @@ const Login = async (user) => {
 export default {
   getAllUsuarios,
   getOneUsuario,
-  Login,
   createNewUsuario,
   updateOneUsuario,
   deleteOneUsuario,
+  Login,
 };

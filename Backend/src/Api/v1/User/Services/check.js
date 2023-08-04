@@ -1,22 +1,25 @@
 import Usuarios from "../User.Schema.js";
 import { comparePasswords } from "../../Helpers/Hash.js";
+import { createToken } from "../../Helpers/Token.js";
 
 export const checkLogin = async (UsuarioData) => {
-  const { correo, password } = UsuarioData;
+  const { email, password } = UsuarioData;
   try {
-    const user = await Usuarios.findOne({ correo });
+    const userFound = await Usuarios.findOne({ email });
 
-    if (!user) {
+    if (!userFound) {
       throw new Error("Usuario no encontrado");
     }
 
-    const isPasswordValid = comparePasswords(password, user.password);
+    const isPasswordValid = comparePasswords(password, userFound.password);
 
     if (!isPasswordValid) {
-      throw new Error("Contraseña incorrecta");
+      throw new Error("Password incorrecta");
     }
 
-    return user;
+    const token = await createToken(userFound._id);
+
+    return token;
   } catch (error) {
     throw new Error("Error al intentar iniciar sesión");
   }

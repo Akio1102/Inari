@@ -2,6 +2,9 @@ import { Schema, model } from "mongoose";
 
 const UsuarioSchema = new Schema(
   {
+    icon: {
+      type: String,
+    },
     username: {
       type: String,
       required: [true, "Username is required"],
