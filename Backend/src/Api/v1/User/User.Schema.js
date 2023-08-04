@@ -1,26 +1,25 @@
 import { Schema, model } from "mongoose";
 
-const UsuarioSchema = Schema(
+const UsuarioSchema = new Schema(
   {
     username: {
       type: String,
-      required: [true, `Username is required`],
+      required: [true, "Username is required"],
       trim: true,
     },
     email: {
       type: String,
-      required: [true, `Email is required`],
+      required: [true, "Email is required"],
       unique: true,
       trim: true,
     },
     password: {
       type: String,
-      required: [true, `Password is required`],
+      required: [true, "Password is required"],
     },
     estado_cuenta: {
       type: Boolean,
       default: true,
-      // required: [true, `Estado_Cuenta is required`],
     },
   },
   {
@@ -28,4 +27,4 @@ const UsuarioSchema = Schema(
   }
 );
 
-export default model("usuario", UsuarioSchema);
+export default model("Usuario", UsuarioSchema);

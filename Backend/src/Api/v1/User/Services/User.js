@@ -28,6 +28,89 @@ const getOneUsuario = async (usuarioID) => {
   }
 };
 
+export const createNewUsuario = async (userData) => {
+  try {
+    const { password, email } = userData;
+    const existingUser = await Usuarios.findOne({ email });
+
+    if (existingUser) {
+      return {
+        msg: `El Usuario ya existe`,
+        status: 409,
+      };
+    }
+
+    const hashedPassword = encryptPassword(password);
+    userData.password = hashedPassword;
+
+    const newUsuario = await Usuarios.create(userData);
+
+    return {
+      status: 201,
+      msg: "Usuario creado Exitosamente",
+      data: newUsuario,
+    };
+  } catch (error) {
+    throw new Error("Error al crear el nuevo usuario");
+  }
+};
+
+const updateOneUsuario = async (userID, userData) => {
+  try {
+    const { password } = userData;
+    const existingUser = await Usuarios.findById(userID);
+
+    if (!existingUser) {
+      return {
+        msg: `El Usuario no existe`,
+        status: 404,
+      };
+    }
+
+    if (!password) {
+      return {
+        msg: `Ingresa una Password Valida`,
+        status: 409,
+      };
+    }
+
+    const hashedPassword = encryptPassword(password);
+    userData.password = hashedPassword;
+
+    const updateUser = await Usuarios.findByIdAndUpdate(userID, userData, {
+      new: true,
+    });
+
+    return {
+      status: 200,
+      msg: "Usuario Actualizado Exitosamente",
+      data: updateUser,
+    };
+  } catch (error) {
+    throw new Error("Hubo un problema al actualizar el usuario");
+  }
+};
+
+const deleteOneUsuario = async (userID) => {
+  try {
+    const deleteUser = await Usuarios.findByIdAndDelete(userID);
+
+    if (!deleteUser) {
+      return {
+        msg: `El Usuario no existe`,
+        status: 404,
+      };
+    }
+
+    return {
+      status: 200,
+      msg: "Usuario Eliminado Exitosamente",
+    };
+  } catch (error) {
+    throw new Error("Hubo un problema al actualizar el usuario");
+  }
+};
+
 const Login = async (user) => {
   try {
     const authenticatedUser = await checkLogin(user);
@@ -36,27 +119,6 @@ const Login = async (user) => {
   } catch (error) {
     throw new Error(`Error al iniciar sesión: ${error.message}`);
   }
-};
-
-export const createNewUsuario = async (newUsuarioData) => {
-  const { password } = newUsuarioData;
-  try {
-    const hashedPassword = encryptPassword(password);
-    newUsuarioData.password = hashedPassword;
-    return await Usuarios.create(newUsuarioData);
-  } catch (error) {
-    throw new Error("Error al crear el nuevo usuario");
-  }
-};
-
-const updateOneUsuario = async (usuarioID, usuarioData) => {
-  return await Usuarios.findByIdAndUpdate(usuarioID, usuarioData, {
-    new: true,
-  });
-};
-
-const deleteOneUsuario = async (usuarioID) => {
-  return await Usuarios.findByIdAndDelete(usuarioID);
 };
 
 export default {

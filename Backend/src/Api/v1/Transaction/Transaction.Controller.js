@@ -2,33 +2,27 @@ import transaccionesService from "./Transaction.Service.js";
 import {
   sendSuccessResponse,
   sendErrorResponse,
+  handleUsuariosResponse,
 } from "../Helpers/sendResponse.js";
 
 const getAllTransacciones = async (req, res) => {
   try {
-    const allTransacciones = await transaccionesService.getAllTransacciones();
-    if (allTransacciones.length > 0) {
-      sendSuccessResponse(res, allTransacciones, "Transacciones encontradas");
-    } else {
-      sendErrorResponse(res, "No hay Transacciones", 404);
-    }
+    const allTransancciones = await transaccionesService.getAllTransacciones();
+    handleUsuariosResponse(res, allTransancciones);
   } catch (error) {
-    sendErrorResponse(res, error);
+    sendErrorResponse(res, `Error al Obtener usuario: ${error.message}`);
   }
 };
 
 const getOneTransaccion = async (req, res) => {
   try {
+    const { transaccionId } = req.params;
     const OneTransaccion = await transaccionesService.getOneTransaccion(
-      req.params.transaccionId
+      transaccionId
     );
-    if (OneTransaccion) {
-      sendSuccessResponse(res, OneTransaccion, "Transaccion encontrada");
-    } else {
-      sendErrorResponse(res, "No Existe esa Transaccion", 404);
-    }
+    handleUsuariosResponse(res, OneTransaccion);
   } catch (error) {
-    sendErrorResponse(res, error);
+    sendErrorResponse(res, `Error al Obtener usuario: ${error.message}`);
   }
 };
 
@@ -37,7 +31,7 @@ const createNewTransaccion = async (req, res) => {
     const createdTransaccion = await transaccionesService.createNewTransaccion(
       req.body
     );
-    sendSuccessResponse(res, createdTransaccion, "Transaccion Creada", 201);
+    sendSuccessResponse(res, createdTransaccion);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -45,15 +39,12 @@ const createNewTransaccion = async (req, res) => {
 
 const updateOneTransaccion = async (req, res) => {
   try {
-    const updatedTransaccion = await transaccionesService.updateOneTransaccion(
-      req.params.transaccionId,
+    const { transaccionId } = req.params;
+    const updatedUsuario = await transaccionesService.updateOneTransaccion(
+      transaccionId,
       req.body
     );
-    if (updatedTransaccion) {
-      sendSuccessResponse(res, updatedTransaccion, "Transaccion Actualizada");
-    } else {
-      sendErrorResponse(res, "Transaccion no encontrada", 404);
-    }
+    handleUsuariosResponse(res, updatedUsuario);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -61,14 +52,11 @@ const updateOneTransaccion = async (req, res) => {
 
 const deleteOneTransaccion = async (req, res) => {
   try {
+    const { transaccionId } = req.params;
     const deletedTransaccion = await transaccionesService.deleteOneTransaccion(
-      req.params.transaccionId
+      transaccionId
     );
-    if (deletedTransaccion) {
-      sendSuccessResponse(res, deletedTransaccion, "Transanccion Eliminada");
-    } else {
-      sendErrorResponse(res, "Transanccion no encontrada", 404);
-    }
+    handleUsuariosResponse(res, deletedTransaccion);
   } catch (error) {
     sendErrorResponse(res, error);
   }

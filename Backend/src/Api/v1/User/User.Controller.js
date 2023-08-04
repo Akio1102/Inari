@@ -26,13 +26,7 @@ const getOneUsuario = async (req, res) => {
 
 const createNewUsuario = async (req, res) => {
   try {
-    const { body } = req.body;
-
-    if (!body.username || !body.password) {
-      return sendErrorResponse(res, "Datos Incompletos", 400);
-    }
-
-    const createdUsuario = await usuariosService.createNewUsuario(body);
+    const createdUsuario = await usuariosService.createNewUsuario(req.body);
     handleUsuariosResponse(res, createdUsuario);
   } catch (error) {
     sendErrorResponse(res, error);
@@ -42,29 +36,21 @@ const createNewUsuario = async (req, res) => {
 const updateOneUsuario = async (req, res) => {
   try {
     const { usuarioId } = req.params;
-
     const updatedUsuario = await usuariosService.updateOneUsuario(
       usuarioId,
       req.body
     );
-    const hashedPassword = encryptPassword(password);
-    newUsuarioData.password = hashedPassword;
     handleUsuariosResponse(res, updatedUsuario);
   } catch (error) {
-    sendErrorResponse(res, `Error al Actualizar usuario: ${error.message}`);
+    sendErrorResponse(res, error);
   }
 };
 
 const deleteOneUsuario = async (req, res) => {
   try {
-    const deletedUsuario = await usuariosService.deleteOneUsuario(
-      req.params.usuarioId
-    );
-    if (deletedUsuario) {
-      sendSuccessResponse(res, deletedUsuario, "Usuario Eliminado");
-    } else {
-      sendErrorResponse(res, "Usuario no encontrado", 404);
-    }
+    const { usuarioId } = req.params;
+    const deletedUsuario = await usuariosService.deleteOneUsuario(usuarioId);
+    handleUsuariosResponse(res, deletedUsuario);
   } catch (error) {
     sendErrorResponse(res, error);
   }
