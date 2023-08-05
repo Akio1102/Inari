@@ -1,12 +1,12 @@
 import { Router } from "express";
 
-import CATEGORY_ROUTES from "./Category/Category.Routes.js";
-import BUDGET_ROUTES from "./Budget/Budget.Routes.js";
-import TRANSACTION_ROUTES from "./Transaction/Transaction.Routes.js";
-import USER_ROUTES from "./User/User.Routes.js";
-import SEARCH from "./Search/search.controller.js";
+import CATEGORY_ROUTES from "./Category.Routes.js";
+import BUDGET_ROUTES from "./Budget.Routes.js";
+import TRANSACTION_ROUTES from "./Transaction.Routes.js";
+import USER_ROUTES from "./User.Routes.js";
+import SEARCH from "../Controllers/search.controller.js";
 
-import { authRequired } from "./Middlewares/ValidateToken.js";
+import { authRequired } from "../Middlewares/ValidateToken.js";
 
 const ROUTER = Router();
 

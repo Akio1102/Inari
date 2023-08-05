@@ -1,6 +1,6 @@
 import { Router } from "express";
-import UsuarioController from "./User.Controller.js";
 import { authRequired } from "../Middlewares/ValidateToken.js";
+import UsuarioController from "../Controllers/User.Controller.js";
 
 const ROUTER = Router();
 

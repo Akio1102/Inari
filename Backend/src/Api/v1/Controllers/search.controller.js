@@ -1,9 +1,9 @@
 import { response } from "express";
 import { Types } from "mongoose";
-import Presupuestos from "../Budget/Budget.Schema.js";
-import Categoria from "../Category/Category.Schema.js";
-import Transaccion from "../Transaction/Transaction.Schema.js";
-import Usuarios from "../User/User.Schema.js";
+import Presupuestos from "../Models/Budget.Schema.js";
+import Categoria from "../Models/Category.Schema.js";
+import Transaccion from "../Models/Transaction.Schema.js";
+import Usuarios from "../Models/User.Schema.js";
 
 const objectId = Types.ObjectId;
 

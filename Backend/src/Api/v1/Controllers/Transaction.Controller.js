@@ -1,4 +1,4 @@
-import transaccionesService from "./Transaction.Service.js";
+import transaccionesService from "../Services/Transaction.js";
 import {
   sendErrorResponse,
   handleUsuariosResponse,

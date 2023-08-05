@@ -1,6 +1,6 @@
-import Usuarios from "../User.Schema.js";
-import { encryptPassword } from "../../Helpers/Hash.js";
-import { checkLogin } from "./check.js";
+import Usuarios from "../Models/User.Schema.js";
+import { encryptPassword, comparePasswords } from "../Helpers/Hash.js";
+import { createToken } from "../Helpers/Token.js";
 
 const getAllUsuarios = async () => {
   try {
@@ -111,9 +111,23 @@ const deleteOneUsuario = async (userID) => {
 };
 
 const Login = async (user) => {
+  const { email, password } = user;
   try {
-    const authenticatedUser = await checkLogin(user);
-    return authenticatedUser;
+    const userFound = await Usuarios.findOne({ email });
+
+    if (!userFound) {
+      throw new Error("Usuario no encontrado");
+    }
+
+    const isPasswordValid = comparePasswords(password, userFound.password);
+
+    if (!isPasswordValid) {
+      throw new Error("Password incorrecta");
+    }
+
+    const token = await createToken(userFound._id);
+
+    return token;
   } catch (error) {
     throw new Error(`Error al iniciar sesión: ${error.message}`);
   }

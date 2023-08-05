@@ -1,4 +1,4 @@
-import presupuestosService from "./Budget.Service.js";
+import presupuestosService from "../Services/Budget.js";
 import {
   sendErrorResponse,
   handleUsuariosResponse,

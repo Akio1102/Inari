@@ -1,4 +1,4 @@
-import Presupuestos from "./Budget.Schema.js";
+import Presupuestos from "../Models/Budget.Schema.js";
 
 const getAllPresupuestos = async (userID) => {
   try {
