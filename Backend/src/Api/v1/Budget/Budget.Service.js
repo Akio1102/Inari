@@ -1,8 +1,12 @@
 import Presupuestos from "./Budget.Schema.js";
 
-const getAllPresupuestos = async () => {
+const getAllPresupuestos = async (userID) => {
   try {
-    const allPresupuestos = await Presupuestos.find();
+    const allPresupuestos = await Presupuestos.find({
+      usuario: userID,
+    })
+      .populate("usuario", ["username"])
+      .populate("categoria", ["nombre", "descripcion"]);
     if (allPresupuestos > 0) {
       return { msg: "Presupuestos Encontrados", data: allPresupuestos };
     }
@@ -14,7 +18,9 @@ const getAllPresupuestos = async () => {
 
 const getOnePresupuesto = async (presupuestoID) => {
   try {
-    const OnePresupuesto = await Presupuestos.findById(presupuestoID);
+    const OnePresupuesto = await Presupuestos.findById(presupuestoID)
+      .populate("usuario", ["username"])
+      .populate("categoria", ["nombre", "descripcion"]);
 
     if (!OnePresupuesto) {
       return { msg: "No Existe esa Presupuesto", status: 404 };
@@ -76,7 +82,9 @@ const updateOnePresupuesto = async (presupuestoID, presupuestoData) => {
 
 const deleteOnePresupuesto = async (presupuestoID) => {
   try {
-    const deletedPresupuesto = await Presupuestos.findByIdAndDelete(presupuestoID);
+    const deletedPresupuesto = await Presupuestos.findByIdAndDelete(
+      presupuestoID
+    );
 
     if (!deletedPresupuesto) {
       return {

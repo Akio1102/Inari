@@ -1,12 +1,16 @@
 import Transacciones from "./Transaction.Schema.js";
 
-const getAllTransacciones = async () => {
+const getAllTransacciones = async (userID) => {
   try {
-    const allTransacciones = await Transacciones.find();
-    if (allTransacciones > 0) {
-      return { msg: "Transancciones Encontradas", data: allTransacciones };
+    const allTransacciones = await Transacciones.find({
+      usuario: userID,
+    })
+      .populate("usuario", ["username"])
+      .populate("categoria", ["nombre", "descripcion"]);
+    if (allTransacciones === 0) {
+      return { msg: "No hay Transancciones", status: 404 };
     }
-    return { msg: "No hay Transancciones", status: 404 };
+    return { msg: "Transancciones Encontradas", data: allTransacciones };
   } catch (error) {
     throw new Error(`Error el Servidor: ${error.message}`);
   }
@@ -14,7 +18,9 @@ const getAllTransacciones = async () => {
 
 const getOneTransaccion = async (transaccionID) => {
   try {
-    const OneTransaccion = await Transacciones.findById(transaccionID);
+    const OneTransaccion = await Transacciones.findById(transaccionID)
+      .populate("usuario", ["username"])
+      .populate("categoria", ["nombre", "descripcion"]);
 
     if (!OneTransaccion) {
       return { msg: "No Existe esa Transanccion", status: 404 };
@@ -47,7 +53,7 @@ const createNewTransaccion = async (newTransaccionData) => {
 
 const updateOneTransaccion = async (transaccionID, transaccionData) => {
   try {
-    const existingUser = await Usuarios.findById(transaccionID);
+    const existingUser = await Transacciones.findById(transaccionID);
 
     if (!existingUser) {
       return {
@@ -56,7 +62,7 @@ const updateOneTransaccion = async (transaccionID, transaccionData) => {
       };
     }
 
-    const updateTransaccion = await Usuarios.findByIdAndUpdate(
+    const updateTransaccion = await Transacciones.findByIdAndUpdate(
       transaccionID,
       transaccionData,
       {

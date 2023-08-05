@@ -8,7 +8,7 @@ export const createToken = async (user) => {
     const { _id } = user;
 
     const jwtConstructor = new SignJWT({
-      sub: _id.toString(),
+      id: _id.toString(),
     });
 
     const token = await jwtConstructor
@@ -22,17 +22,18 @@ export const createToken = async (user) => {
 
     return token;
   } catch (error) {
-    console.error(error);
-    throw new Error("Error al generar el token");
+    throw new Error(`Error al generar el token ${error.message}`);
   }
 };
 
 export const verifyToken = async (token) => {
   try {
-    const { payload } = await jwtVerify(token, Config.JWT_PRIVATE_KEY);
+    const { payload } = await jwtVerify(
+      token,
+      encoder.encode(Config.JWT_PRIVATE_KEY)
+    );
     return payload;
   } catch (error) {
-    console.error("Token inválido:", error.message);
-    throw new Error("Token inválido");
+    throw new Error(`Token invalido ${error.message}`);
   }
 };

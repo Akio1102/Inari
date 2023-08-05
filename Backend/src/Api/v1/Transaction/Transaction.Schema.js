@@ -4,7 +4,7 @@ const TransaccionSchema = Schema(
   {
     usuario: {
       type: Schema.Types.ObjectId,
-      ref: "usuario",
+      ref: "Usuario",
       required: [true, "Se requiere usuario"],
     },
     categoria: {

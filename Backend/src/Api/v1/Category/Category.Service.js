@@ -3,10 +3,10 @@ import Categorias from "./Category.Schema.js";
 const getAllCategorias = async () => {
   try {
     const allCategorias = await Categorias.find();
-    if (allCategorias > 0) {
-      return { msg: "Cagetogiras Encontradas", data: allCategorias };
+    if (allCategorias < 0) {
+      return { msg: "No hay Cagetogiras", status: 404 };
     }
-    return { msg: "No hay Cagetogiras", status: 404 };
+    return { msg: "Cagetogiras Encontradas", data: allCategorias };
   } catch (error) {
     throw new Error(`Error el Servidor: ${error.message}`);
   }
@@ -77,7 +77,6 @@ const updateOneCategoria = async (categoriaID, categoriaData) => {
 const deleteOneCategoria = async (categoriaID) => {
   try {
     const deletedCategory = await Categorias.findByIdAndDelete(categoriaID);
-
     if (!deletedCategory) {
       return {
         msg: `La Categoria no existe`,

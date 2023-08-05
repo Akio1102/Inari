@@ -6,10 +6,13 @@ import {
 
 const getAllTransacciones = async (req, res) => {
   try {
-    const allTransancciones = await transaccionesService.getAllTransacciones();
+    const { id } = req.user;
+    const allTransancciones = await transaccionesService.getAllTransacciones(
+      id
+    );
     handleUsuariosResponse(res, allTransancciones);
   } catch (error) {
-    sendErrorResponse(res,error);
+    sendErrorResponse(res, error);
   }
 };
 
@@ -27,8 +30,19 @@ const getOneTransaccion = async (req, res) => {
 
 const createNewTransaccion = async (req, res) => {
   try {
+    const { id } = req.user;
+    const { categoria, tipo, monto, fecha } = req.body;
+
+    const data = {
+      usuario: id,
+      categoria,
+      tipo,
+      monto,
+      fecha,
+    };
+
     const createdTransaccion = await transaccionesService.createNewTransaccion(
-      req.body
+      data
     );
     handleUsuariosResponse(res, createdTransaccion);
   } catch (error) {
@@ -38,10 +52,20 @@ const createNewTransaccion = async (req, res) => {
 
 const updateOneTransaccion = async (req, res) => {
   try {
+    const { id } = req.user;
+    const { categoria, tipo, monto, fecha } = req.body;
+
+    const data = {
+      usuario: id,
+      categoria,
+      tipo,
+      monto,
+      fecha,
+    };
     const { transaccionId } = req.params;
     const updatedUsuario = await transaccionesService.updateOneTransaccion(
       transaccionId,
-      req.body
+      data
     );
     handleUsuariosResponse(res, updatedUsuario);
   } catch (error) {

@@ -21,8 +21,8 @@ const getAllUsuarios = async (req, res) => {
 
 const getOneUsuario = async (req, res) => {
   try {
-    const { usuarioId } = req.params;
-    const oneUsuario = await usuariosService.getOneUsuario(usuarioId);
+    const { id } = req.user;
+    const oneUsuario = await usuariosService.getOneUsuario(id);
     handleUsuariosResponse(res, oneUsuario);
   } catch (error) {
     sendErrorResponse(res, error);
@@ -40,11 +40,8 @@ const createNewUsuario = async (req, res) => {
 
 const updateOneUsuario = async (req, res) => {
   try {
-    const { usuarioId } = req.params;
-    const updatedUsuario = await usuariosService.updateOneUsuario(
-      usuarioId,
-      req.body
-    );
+    const { id } = req.user;
+    const updatedUsuario = await usuariosService.updateOneUsuario(id, req.body);
     handleUsuariosResponse(res, updatedUsuario);
   } catch (error) {
     sendErrorResponse(res, error);
@@ -53,8 +50,11 @@ const updateOneUsuario = async (req, res) => {
 
 const deleteOneUsuario = async (req, res) => {
   try {
-    const { usuarioId } = req.params;
-    const deletedUsuario = await usuariosService.deleteOneUsuario(usuarioId);
+    const { id } = req.user;
+    const deletedUsuario = await usuariosService.deleteOneUsuario(id);
+    res.cookie("token", "", {
+      expires: new Date(0),
+    });
     handleUsuariosResponse(res, deletedUsuario);
   } catch (error) {
     sendErrorResponse(res, error);

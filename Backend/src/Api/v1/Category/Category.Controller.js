@@ -6,7 +6,7 @@ import {
 
 const getAllCategorias = async (req, res) => {
   try {
-    const allCategorias = await transaccionesService.getAllCategorias();
+    const allCategorias = await categoriasService.getAllCategorias();
     handleUsuariosResponse(res, allCategorias);
   } catch (error) {
     sendErrorResponse(res, error);
@@ -16,9 +16,7 @@ const getAllCategorias = async (req, res) => {
 const getOneCategoria = async (req, res) => {
   try {
     const { categoriaId } = req.params;
-    const Onecategoria = await categoriasService.getOneCategoria(
-      categoriaId
-    );
+    const Onecategoria = await categoriasService.getOneCategoria(categoriaId);
     handleUsuariosResponse(res, Onecategoria);
   } catch (error) {
     sendErrorResponse(res, error);
@@ -27,10 +25,10 @@ const getOneCategoria = async (req, res) => {
 
 const createNewCategoria = async (req, res) => {
   try {
-    const createdTransaccion = await categoriasService.createNewCategoria(
+    const createdCategory = await categoriasService.createNewCategoria(
       req.body
     );
-    handleUsuariosResponse(res, createdTransaccion);
+    handleUsuariosResponse(res, createdCategory);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -39,11 +37,11 @@ const createNewCategoria = async (req, res) => {
 const updateOneCategoria = async (req, res) => {
   try {
     const { categoriaId } = req.params;
-    const updatedUsuario = await categoriasService.updateOneCategoria(
+    const updatedCategory = await categoriasService.updateOneCategoria(
       categoriaId,
       req.body
     );
-    handleUsuariosResponse(res, updatedUsuario);
+    handleUsuariosResponse(res, updatedCategory);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -51,11 +49,11 @@ const updateOneCategoria = async (req, res) => {
 
 const deleteOneCategoria = async (req, res) => {
   try {
-    const { transaccionId } = req.params;
-    const deletedTransaccion = await categoriasService.deleteOneCategoria(
-      transaccionId
+    const { categoriaId } = req.params;
+    const deletedCategory = await categoriasService.deleteOneCategoria(
+      categoriaId
     );
-    handleUsuariosResponse(res, deletedTransaccion);
+    handleUsuariosResponse(res, deletedCategory);
   } catch (error) {
     sendErrorResponse(res, error);
   }
