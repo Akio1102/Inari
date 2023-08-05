@@ -2,17 +2,20 @@ import { Schema, model } from "mongoose";
 
 const PresupuestoSchema = Schema(
   {
-    categoria_id: {
-      type: String,
-      required: [true, `CategoriaID is required`],
+    usuario: {
+      type: Schema.Types.ObjectId,
+      ref: "usuario",
+      required: [true, "Se requiere Usuario"],
+    },
+    categoria: {
+      type: Schema.Types.ObjectId,
+      ref: "categoria",
+      required: [true, "Se requiere Categoria"],
     },
     monto: {
       type: Number,
-      required: [true, `Monto is required`],
-    },
-    usuario_id: {
-      type: String,
-      required: [true, `UsuarioID is required`],
+      required: [true, `Se requiere Monto`],
+      min: 0,
     },
   },
   {

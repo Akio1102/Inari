@@ -2,25 +2,29 @@ import { Schema, model } from "mongoose";
 
 const TransaccionSchema = Schema(
   {
-    categoria_id: {
-      type: String,
-      required: [true, `Categoria_ID is required`],
+    usuario: {
+      type: Schema.Types.ObjectId,
+      ref: "usuario",
+      required: [true, "Se requiere usuario"],
     },
-    usuario_id: {
-      type: String,
-      required: [true, `Usuario_id is required`],
-    },
-    nombre_categoria: {
-      type: String,
-      required: [true, `Nombre_categoria is required`],
+    categoria: {
+      type: Schema.Types.ObjectId,
+      ref: "categoria",
+      required: [true, "Se requiere categoria"],
     },
     tipo: {
       type: String,
-      required: [true, `Tipo is required`],
+      required: [true, "Se requiere Tipo"],
+      enum: ["ingreso", "egreso"],
     },
     monto: {
       type: Number,
-      required: [true, `Monto is required`],
+      required: [true, "Se requiere Monto"],
+      min: 0,
+    },
+    fecha: {
+      type: Date,
+      required: [true, "Se requiere Fecha"],
     },
   },
   {
