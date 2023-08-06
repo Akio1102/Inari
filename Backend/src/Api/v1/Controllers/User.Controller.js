@@ -2,7 +2,7 @@ import usuariosService from "../Services/User.js";
 import {
   sendSuccessResponse,
   sendErrorResponse,
-  handleUsuariosResponse,
+  handleResponse,
 } from "../Helpers/sendResponse.js";
 import { fileURLToPath } from "url";
 import path from "path";
@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 const getAllUsuarios = async (req, res) => {
   try {
     const allUsuarios = await usuariosService.getAllUsuarios();
-    handleUsuariosResponse(res, allUsuarios);
+    handleResponse(res, allUsuarios);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -23,7 +23,7 @@ const getOneUsuario = async (req, res) => {
   try {
     const { id } = req.user;
     const oneUsuario = await usuariosService.getOneUsuario(id);
-    handleUsuariosResponse(res, oneUsuario);
+    handleResponse(res, oneUsuario);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -32,7 +32,7 @@ const getOneUsuario = async (req, res) => {
 const createNewUsuario = async (req, res) => {
   try {
     const createdUsuario = await usuariosService.createNewUsuario(req.body);
-    handleUsuariosResponse(res, createdUsuario);
+    handleResponse(res, createdUsuario);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -42,7 +42,7 @@ const updateOneUsuario = async (req, res) => {
   try {
     const { id } = req.user;
     const updatedUsuario = await usuariosService.updateOneUsuario(id, req.body);
-    handleUsuariosResponse(res, updatedUsuario);
+    handleResponse(res, updatedUsuario);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -55,7 +55,7 @@ const deleteOneUsuario = async (req, res) => {
     res.cookie("token", "", {
       expires: new Date(0),
     });
-    handleUsuariosResponse(res, deletedUsuario);
+    handleResponse(res, deletedUsuario);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -76,7 +76,7 @@ const Logout = (req, res) => {
   res.cookie("token", "", {
     expires: new Date(0),
   });
-  return res.sendStatus(200);
+  return res.status(200).json({ msg: "Token Eliminado" });
 };
 
 const uploadFile = (req, res) => {

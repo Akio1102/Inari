@@ -1,14 +1,11 @@
 import presupuestosService from "../Services/Budget.js";
-import {
-  sendErrorResponse,
-  handleUsuariosResponse,
-} from "../Helpers/sendResponse.js";
+import { sendErrorResponse, handleResponse } from "../Helpers/sendResponse.js";
 
 const getAllPresupuestos = async (req, res) => {
   try {
     const { id } = req.user;
     const allPresupuestos = await presupuestosService.getAllPresupuestos(id);
-    handleUsuariosResponse(res, allPresupuestos);
+    handleResponse(res, allPresupuestos);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -20,7 +17,7 @@ const getOnePresupuesto = async (req, res) => {
     const OnePresupuesto = await presupuestosService.getOnePresupuesto(
       presupuestoId
     );
-    handleUsuariosResponse(res, OnePresupuesto);
+    handleResponse(res, OnePresupuesto);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -39,7 +36,7 @@ const createNewPresupuesto = async (req, res) => {
     const createdPresupuesto = await presupuestosService.createNewPresupuesto(
       data
     );
-    handleUsuariosResponse(res, createdPresupuesto);
+    handleResponse(res, createdPresupuesto);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -60,7 +57,7 @@ const updateOnePresupuesto = async (req, res) => {
       presupuestoId,
       data
     );
-    handleUsuariosResponse(res, updatedPresupuesto);
+    handleResponse(res, updatedPresupuesto);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -72,7 +69,7 @@ const deleteOnePresupuesto = async (req, res) => {
     const deletedPresupuesto = await presupuestosService.deleteOnePresupuesto(
       presupuestoId
     );
-    handleUsuariosResponse(res, deletedPresupuesto);
+    handleResponse(res, deletedPresupuesto);
   } catch (error) {
     sendErrorResponse(res, error);
   }

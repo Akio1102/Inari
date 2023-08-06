@@ -1,8 +1,5 @@
 import transaccionesService from "../Services/Transaction.js";
-import {
-  sendErrorResponse,
-  handleUsuariosResponse,
-} from "../Helpers/sendResponse.js";
+import { sendErrorResponse, handleResponse } from "../Helpers/sendResponse.js";
 
 const getAllTransacciones = async (req, res) => {
   try {
@@ -10,7 +7,7 @@ const getAllTransacciones = async (req, res) => {
     const allTransancciones = await transaccionesService.getAllTransacciones(
       id
     );
-    handleUsuariosResponse(res, allTransancciones);
+    handleResponse(res, allTransancciones);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -22,7 +19,7 @@ const getOneTransaccion = async (req, res) => {
     const OneTransaccion = await transaccionesService.getOneTransaccion(
       transaccionId
     );
-    handleUsuariosResponse(res, OneTransaccion);
+    handleResponse(res, OneTransaccion);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -44,7 +41,7 @@ const createNewTransaccion = async (req, res) => {
     const createdTransaccion = await transaccionesService.createNewTransaccion(
       data
     );
-    handleUsuariosResponse(res, createdTransaccion);
+    handleResponse(res, createdTransaccion);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -67,7 +64,7 @@ const updateOneTransaccion = async (req, res) => {
       transaccionId,
       data
     );
-    handleUsuariosResponse(res, updatedUsuario);
+    handleResponse(res, updatedUsuario);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -79,7 +76,7 @@ const deleteOneTransaccion = async (req, res) => {
     const deletedTransaccion = await transaccionesService.deleteOneTransaccion(
       transaccionId
     );
-    handleUsuariosResponse(res, deletedTransaccion);
+    handleResponse(res, deletedTransaccion);
   } catch (error) {
     sendErrorResponse(res, error);
   }

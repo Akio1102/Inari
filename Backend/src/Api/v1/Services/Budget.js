@@ -1,4 +1,4 @@
-import Presupuestos from "../Models/Budget.Schema.js";
+import Presupuestos from "../Models/Budget.Model.js";
 
 const getAllPresupuestos = async (userID) => {
   try {
@@ -7,12 +7,13 @@ const getAllPresupuestos = async (userID) => {
     })
       .populate("usuario", ["username"])
       .populate("categoria", ["nombre", "descripcion"]);
-    if (allPresupuestos > 0) {
-      return { msg: "Presupuestos Encontrados", data: allPresupuestos };
+    if (allPresupuestos === 0) {
+      return { msg: "No hay Presupuestos", status: 404 };
     }
-    return { msg: "No hay Presupuestos", status: 404 };
+
+    return { msg: "Presupuestos Encontrados", data: allPresupuestos };
   } catch (error) {
-    throw new Error(`Error el Servidor: ${error.message}`);
+    throw new Error(`Error en el Servidor: ${error.message}`);
   }
 };
 
@@ -63,8 +64,8 @@ const updateOnePresupuesto = async (presupuestoID, presupuestoData) => {
     }
 
     const updatePresupuesto = await Presupuestos.findByIdAndUpdate(
-      categoriaID,
-      categoriaData,
+      presupuestoID,
+      presupuestoData,
       {
         new: true,
       }

@@ -1,4 +1,4 @@
-import Transacciones from "../Models/Transaction.Schema.js";
+import Transacciones from "../Models/Transaction.Model.js";
 
 const getAllTransacciones = async (userID) => {
   try {

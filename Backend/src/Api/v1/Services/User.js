@@ -1,4 +1,4 @@
-import Usuarios from "../Models/User.Schema.js";
+import Usuarios from "../Models/User.Model.js";
 import { encryptPassword, comparePasswords } from "../Helpers/Hash.js";
 import { createToken } from "../Helpers/Token.js";
 

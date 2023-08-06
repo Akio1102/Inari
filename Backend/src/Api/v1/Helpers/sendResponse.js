@@ -7,7 +7,7 @@ export function sendErrorResponse(res, err, statusCode = 500) {
   res.status(statusCode).send({ error: "Error en el Server", message: err });
 }
 
-export const handleUsuariosResponse = (res, obj) => {
+export const handleResponse = (res, obj) => {
   if (obj.status === 404) {
     return sendErrorResponse(res, obj.msg, obj.status);
   }

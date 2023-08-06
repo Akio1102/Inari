@@ -1,13 +1,10 @@
 import categoriasService from "../Services/Category.js";
-import {
-  handleUsuariosResponse,
-  sendErrorResponse,
-} from "../Helpers/sendResponse.js";
+import { handleResponse, sendErrorResponse } from "../Helpers/sendResponse.js";
 
 const getAllCategorias = async (req, res) => {
   try {
     const allCategorias = await categoriasService.getAllCategorias();
-    handleUsuariosResponse(res, allCategorias);
+    handleResponse(res, allCategorias);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -17,7 +14,7 @@ const getOneCategoria = async (req, res) => {
   try {
     const { categoriaId } = req.params;
     const Onecategoria = await categoriasService.getOneCategoria(categoriaId);
-    handleUsuariosResponse(res, Onecategoria);
+    handleResponse(res, Onecategoria);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -28,7 +25,7 @@ const createNewCategoria = async (req, res) => {
     const createdCategory = await categoriasService.createNewCategoria(
       req.body
     );
-    handleUsuariosResponse(res, createdCategory);
+    handleResponse(res, createdCategory);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -41,7 +38,7 @@ const updateOneCategoria = async (req, res) => {
       categoriaId,
       req.body
     );
-    handleUsuariosResponse(res, updatedCategory);
+    handleResponse(res, updatedCategory);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -53,7 +50,7 @@ const deleteOneCategoria = async (req, res) => {
     const deletedCategory = await categoriasService.deleteOneCategoria(
       categoriaId
     );
-    handleUsuariosResponse(res, deletedCategory);
+    handleResponse(res, deletedCategory);
   } catch (error) {
     sendErrorResponse(res, error);
   }

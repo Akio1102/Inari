@@ -4,8 +4,8 @@ const PresupuestoSchema = new Schema(
   {
     usuario: {
       type: Schema.Types.ObjectId,
-      ref: "usuario",
-      required: [true, "Se requiere Usuario"],
+      ref: "Usuario",
+      required: [true, "Se requiere usuario"],
     },
     categoria: {
       type: Schema.Types.ObjectId,
