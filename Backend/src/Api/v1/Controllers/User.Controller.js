@@ -6,6 +6,7 @@ import {
 } from "../Helpers/sendResponse.js";
 import { fileURLToPath } from "url";
 import path from "path";
+import { verify } from "crypto";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -79,6 +80,17 @@ const Logout = (req, res) => {
   return res.status(200).json({ msg: "Token Eliminado" });
 };
 
+const verifytoken = async (req, res) => {
+  try {
+    const { token } = req.cookies;
+    const Verifyd = await usuariosService.Verify(token);
+    console.log(Verifyd);
+    return res.json(Verifyd);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
 const uploadFile = (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0 || !req.files.file) {
     return res.status(400).send("No files were uploaded.");
@@ -107,4 +119,5 @@ export default {
   Login,
   Logout,
   uploadFile,
+  verifytoken,
 };

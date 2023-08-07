@@ -1,6 +1,6 @@
 import Usuarios from "../Models/User.Model.js";
 import { encryptPassword, comparePasswords } from "../Helpers/Hash.js";
-import { createToken } from "../Helpers/Token.js";
+import { createToken, verifyToken } from "../Helpers/Token.js";
 
 const getAllUsuarios = async () => {
   try {
@@ -133,6 +133,28 @@ const Login = async (user) => {
   }
 };
 
+const Verify = async (token) => {
+  try {
+    if (!token) {
+      throw new Error("No token, autorizacion denegada");
+    }
+
+    const compared = await verifyToken(token);
+    if (!compared) {
+      throw new Error("No token, autorizacion denegada");
+    }
+    const { id } = compared;
+    const userFound = await Usuarios.findById(id);
+    return {
+      id: userFound._id,
+      username: userFound.username,
+      email: userFound.email,
+    };
+  } catch (error) {
+    throw new Error(`Error al iniciar sesión: ${error.message}`);
+  }
+};
+
 export default {
   getAllUsuarios,
   getOneUsuario,
@@ -140,4 +162,5 @@ export default {
   updateOneUsuario,
   deleteOneUsuario,
   Login,
+  Verify,
 };

@@ -7,11 +7,8 @@ import UsuarioController from "../Controllers/User.Controller.js";
 
 const ROUTER = Router();
 
-export default ROUTER.get(
-  "/usuarios",
-  authRequired,
-  UsuarioController.getAllUsuarios
-)
+export default ROUTER.get("/verify", UsuarioController.verifytoken)
+  .get("/usuarios", authRequired, UsuarioController.getAllUsuarios)
   .get("/usuario", authRequired, UsuarioController.getOneUsuario)
   .post(
     "/usuario/Login",
